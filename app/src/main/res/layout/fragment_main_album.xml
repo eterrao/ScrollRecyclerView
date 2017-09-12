@@ -6,77 +6,80 @@
     android:orientation="vertical">
 
     <RelativeLayout
-        android:id="@+id/rl_tool_bar_album"
         android:layout_width="match_parent"
-        android:layout_height="43.5dp">
+        android:layout_height="wrap_content">
+
+        <include
+            android:id="@+id/layout_photo_preview"
+            layout="@layout/layout_item_album_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rl_tool_bar_album" />
+
+        <com.welove.welove520.albumrecyclverviewheader.album.CompatRecyclerView
+            android:id="@+id/rv_photo_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_photo_preview" />
 
         <RelativeLayout
+            android:id="@+id/rl_tool_bar_album"
             android:layout_width="match_parent"
-            android:layout_height="43.5dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/toolbar_color_white">
+            android:layout_height="43.5dp">
 
-            <ImageView
-                android:id="@+id/iv_tool_bar_left_arrow"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:paddingLeft="17dp"
-                android:paddingRight="17dp"
-                android:src="@drawable/ic_left_arrow" />
-
-            <LinearLayout
-                android:id="@+id/ll_tool_bar_album_change"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_centerInParent="true"
-                android:gravity="center"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="6.5dp"
-                    android:text="相机交卷"
-                    android:textColor="@color/text_color_dialog_303032"
-                    android:textSize="16sp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="43.5dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/toolbar_color_white">
 
                 <ImageView
+                    android:id="@+id/iv_tool_bar_left_arrow"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="3dp"
-                    android:src="@drawable/ic_down_arrow" />
-            </LinearLayout>
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:paddingLeft="17dp"
+                    android:paddingRight="17dp"
+                    android:src="@drawable/ic_left_arrow" />
 
-            <TextView
-                android:id="@+id/tv_toolbar_ok"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:gravity="center"
-                android:paddingLeft="22dp"
-                android:paddingRight="22dp"
-                android:text="确定"
-                android:textColor="@color/text_color_dialog_303032"
-                android:textSize="16sp" />
+                <LinearLayout
+                    android:id="@+id/ll_tool_bar_album_change"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="6.5dp"
+                        android:text="相机交卷"
+                        android:textColor="@color/text_color_dialog_303032"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="3dp"
+                        android:src="@drawable/ic_down_arrow" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_toolbar_ok"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center"
+                    android:paddingLeft="22dp"
+                    android:paddingRight="22dp"
+                    android:text="确定"
+                    android:textColor="@color/text_color_dialog_303032"
+                    android:textSize="16sp" />
+            </RelativeLayout>
         </RelativeLayout>
     </RelativeLayout>
-
-    <include
-        android:id="@+id/layout_photo_preview"
-        layout="@layout/layout_item_album_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rl_tool_bar_album" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_photo_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/layout_photo_preview"
-        android:layout_weight="1" />
-
 </RelativeLayout>

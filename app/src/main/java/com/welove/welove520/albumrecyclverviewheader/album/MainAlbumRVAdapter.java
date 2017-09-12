@@ -28,7 +28,7 @@ import butterknife.ButterKnife;
  * Version  : 1.0
  */
 
-public class MainAlbumRVAdapter extends RecyclerView.Adapter<MainAlbumRVAdapter.ViewHolder> implements MainAlbumEditActivity.Callback {
+public class MainAlbumRVAdapter extends RecyclerView.Adapter<MainAlbumRVAdapter.ViewHolder> {
 
     public static final int TYPE_NORMAL = 0;
     public static final int TYPE_HEADER = 1;
@@ -46,6 +46,7 @@ public class MainAlbumRVAdapter extends RecyclerView.Adapter<MainAlbumRVAdapter.
 
     private int slectedPosition;
     private RecyclerView mRecyclerView;
+    private View itemView;
 
     public MainAlbumRVAdapter(Context context) {
         mContext = context;
@@ -67,11 +68,11 @@ public class MainAlbumRVAdapter extends RecyclerView.Adapter<MainAlbumRVAdapter.
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_item_album, null);
+        itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_item_album, null);
         if (mHeaderView != null && viewType == TYPE_HEADER) {
             return new ViewHolder(mHeaderView);
         }
-        return new ViewHolder(view);
+        return new ViewHolder(itemView);
     }
 
     // TODO: 2017/9/6 封装 Glide 加载 URI 这种类型
@@ -91,7 +92,7 @@ public class MainAlbumRVAdapter extends RecyclerView.Adapter<MainAlbumRVAdapter.
                     String photoPath = null;
                     if (clickType == TYPE_NORMAL && photoList != null && photoList.size() > 0) {
                         slectedPosition = position;
-                        int currentPosition = position - 2;
+                        int currentPosition = position - 1;
                         if (currentPosition >= 0) {
                             photoPath = photoList.get(currentPosition);
                         }
@@ -172,9 +173,8 @@ public class MainAlbumRVAdapter extends RecyclerView.Adapter<MainAlbumRVAdapter.
         mRecyclerView = recyclerView;
     }
 
-    @Override
-    public View findTargetView(float x, float y) {
-        return mRecyclerView.findChildViewUnder(x, y);
+    public int getChildHeight() {
+        return itemView != null ? itemView.getHeight() : 0;
     }
 
     public interface OnAlbumItemClickListener {

@@ -9,7 +9,6 @@
         android:layout_width="90dp"
         android:layout_height="90dp"
         android:foreground="#08000000"
-        android:padding="0.5dp"
         android:scaleType="centerCrop"
         android:src="@drawable/ab_timeline_album_holder" />
 
@@ -18,7 +17,6 @@
         android:layout_width="90dp"
         android:layout_height="90dp"
         android:background="#90ffffff"
-        android:padding="0.5dp"
         android:scaleType="centerCrop"
         android:visibility="gone" />
 
