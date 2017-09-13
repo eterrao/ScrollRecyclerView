@@ -73,8 +73,6 @@ public class MainAlbumEditActivity extends Activity implements MainAlbumEditCont
 
     private boolean isTop;
     private GridLayoutManager gridLayoutManager;
-    private int scrolledHeight = 0;
-    private int lastedHeight = 0;
 
     @Override
     public void setPresenter(MainAlbumEditContract.Presenter presenter) {
@@ -120,13 +118,10 @@ public class MainAlbumEditActivity extends Activity implements MainAlbumEditCont
         horizontalDivider.setDrawable(getResources().getDrawable(R.drawable.horizontal_divider));
         rvPhotoList.addItemDecoration(verticalDivider);
         rvPhotoList.addItemDecoration(horizontalDivider);
-        final int slop = ViewConfiguration.get(this).getScaledTouchSlop();
-
         rvPhotoList.setOnTouchListener(new View.OnTouchListener() {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                WeloveLog.debug(" getY = " + event.getY() + " , slop = " + slop);
                 float y = event.getRawY();
                 float headerBottom = rlAlbumHeader.getBottom();
                 float scrollY = y - headerBottom;
@@ -145,6 +140,10 @@ public class MainAlbumEditActivity extends Activity implements MainAlbumEditCont
                                     }
                                     rlAlbumHeader.setTranslationY(scrollY);
                                     rvPhotoList.setTranslationY(scrollY);
+                                    if (rvPhotoList.getMeasuredHeight() < DensityUtil.getScreenHeight(getApplicationContext()) - (rlAlbumHeader.getTop() * 2)) {
+                                        rvPhotoList.setMeasureHeight(DensityUtil.getScreenHeight(getApplicationContext()) - (rlAlbumHeader.getTop() * 2));
+                                        rvPhotoList.requestLayout();
+                                    }
                                 }
                             }
                         }
@@ -152,10 +151,8 @@ public class MainAlbumEditActivity extends Activity implements MainAlbumEditCont
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_CANCEL:
                         WeloveLog.debug(" event action ==> " + event.getAction());
-                        if (Math.abs(rlAlbumHeader.getTranslationY()) > 0 && (rlAlbumHeader.getHeight() - Math.abs(scrollY) > rlAlbumHeader.getTop()) && !isTop) {
-                            if (Math.abs(rlAlbumHeader.getTranslationY()) - rlAlbumHeader.getHeight() / 5 > 0) {
-                                rvPhotoList.setMeasureHeight(DensityUtil.getScreenHeight(getApplicationContext()) - (rlAlbumHeader.getTop() * 2));
-                                rvPhotoList.requestLayout();
+                        if (Math.abs(rlAlbumHeader.getTranslationY()) > 0 && (rlAlbumHeader.getHeight() - Math.abs(scrollY) > rlAlbumHeader.getTop()) && scrollY < 0 && !isTop) {
+                            if (Math.abs(rlAlbumHeader.getTranslationY()) - rlAlbumHeader.getHeight() / 6 > 0) {
                                 ObjectAnimator upAnim = ObjectAnimator.ofFloat(rlAlbumHeader, "translationY", scrollY, -rlAlbumHeader.getHeight() + rlAlbumHeader.getTop());
                                 ObjectAnimator upAnim2 = ObjectAnimator.ofFloat(rvPhotoList, "translationY", scrollY, -rlAlbumHeader.getHeight() + rlAlbumHeader.getTop());
                                 upAnim.setInterpolator(new DecelerateInterpolator());
@@ -186,8 +183,6 @@ public class MainAlbumEditActivity extends Activity implements MainAlbumEditCont
                                 downAnim2.setInterpolator(new DecelerateInterpolator());
                                 AnimatorSet animatorSet = new AnimatorSet();
                                 animatorSet.playTogether(downAnim, downAnim2);
-                                scrolledHeight = 0;
-                                lastedHeight = 0;
                                 animatorSet.addListener(new AnimatorListenerAdapter() {
                                     @Override
                                     public void onAnimationStart(Animator animation) {
@@ -314,8 +309,6 @@ public class MainAlbumEditActivity extends Activity implements MainAlbumEditCont
                         downAnim2.setInterpolator(new DecelerateInterpolator());
                         AnimatorSet animatorSet = new AnimatorSet();
                         animatorSet.playTogether(downAnim, downAnim2);
-                        scrolledHeight = 0;
-                        lastedHeight = 0;
                         animatorSet.addListener(new AnimatorListenerAdapter() {
                             @Override
                             public void onAnimationStart(Animator animation) {
